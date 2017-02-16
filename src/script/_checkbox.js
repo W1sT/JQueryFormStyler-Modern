@@ -1,10 +1,10 @@
-var checkboxOutput = function( )
+var checkboxOutput = function()
 {
-	var att = new Attributes( ),
-		checkbox = $('<div class="jq-checkbox"><div class="jq-checkbox__div"></div></div>')
-					.attr( { id: att.id, title: att.title } )
-					.addClass( att.classes )
-					.data( att.data );
+	var att = new Attributes(),
+		checkbox = $( '<div class="jq-checkbox"><div class="jq-checkbox__div"></div></div>' )
+			.attr( { id: att.id, title: att.title } )
+			.addClass( att.classes )
+			.data( att.data );
 
 	// Прячем оригинальный чекбокс
 	el.css( {
@@ -14,7 +14,7 @@ var checkboxOutput = function( )
 		margin: 0,
 		padding: 0
 	} )
-	.after( checkbox ).prependTo( checkbox );
+		.after( checkbox ).prependTo( checkbox );
 
 	// 
 	checkbox.attr( 'unselectable', 'on' )
@@ -27,18 +27,18 @@ var checkboxOutput = function( )
 			display: 'inline-block',
 			position: 'relative',
 			overflow: 'hidden'
-	} );
+		} );
 
 	// Установка активности
 	if( el.is( ':disabled' ) )
 	{
 		checkbox.addClass( 'disabled' );
 	}
-	
+
 	// Клик по псевдоблоку ( смена состояния )
 	checkbox.click( function( e )
 	{
-		e.preventDefault( );
+		e.preventDefault();
 
 		// Обрабатываем только активный псевдобокс
 		if( !checkbox.is( '.disabled' ) )
@@ -68,10 +68,10 @@ var checkboxOutput = function( )
 					el.prop( 'indeterminate', false );
 				}
 			}
-			
+
 			// Фокусируем и изменяем вызываем состояние изменения
-			el.focus( )
-				.change( );
+			el.focus()
+				.change();
 		}
 	} );
 
@@ -81,12 +81,12 @@ var checkboxOutput = function( )
 		if( !$( e.target ).is( 'a' ) && !$( e.target ).closest( checkbox ).length )
 		{
 			checkbox.triggerHandler( 'click' );
-			e.preventDefault( );
+			e.preventDefault();
 		}
 	} );
 
 	// Обработка изменений
-	el.on( 'change.' + pluginName, function( )
+	el.on( 'change.' + pluginName, function()
 	{
 		// Отмечено
 		if( el.is( ':checked' ) || el.is( ':indeterminate' ) )
@@ -110,37 +110,37 @@ var checkboxOutput = function( )
 		}
 	} )
 	// Обработка переключения при помощи клавиатуры
-	.on( 'keydown.' + pluginName, function( e )
-	{
-		if( e.which === 32 )
+		.on( 'keydown.' + pluginName, function( e )
 		{
-			e.preventDefault( );
-			checkbox.click( );
-		}
-	} )
-	// Обработка наведения фокуса
-	.on( 'focus.' + pluginName, function( )
-	{
-		if( !checkbox.is( '.disabled' ) )
+			if( e.which === 32 )
+			{
+				e.preventDefault();
+				checkbox.click();
+			}
+		} )
+		// Обработка наведения фокуса
+		.on( 'focus.' + pluginName, function()
 		{
-			checkbox.addClass( 'focused' );
-		}
-	} )
-	// Обработка снятия фокуса
-	.on( 'blur.' + pluginName, function( )
-	{
-		checkbox.removeClass( 'focused' );
-	} );
-	
+			if( !checkbox.is( '.disabled' ) )
+			{
+				checkbox.addClass( 'focused' );
+			}
+		} )
+		// Обработка снятия фокуса
+		.on( 'blur.' + pluginName, function()
+		{
+			checkbox.removeClass( 'focused' );
+		} );
+
 	// Мы установили стиль, уведомляем об изменении
-	el.change( );
+	el.change();
 };
 
 // Стилизируем компонент
-checkboxOutput( );
+checkboxOutput();
 
 // Обновление при динамическом изменении
-el.on( 'refresh', function( )
+el.on( 'refresh', function()
 {
 	//
 	el.closest( 'label' )
@@ -149,8 +149,8 @@ el.on( 'refresh', function( )
 
 	// Убираем стилизацию компонента
 	el.off( '.' + pluginName )
-		.parent( ).before( el ).remove( );
+		.parent().before( el ).remove();
 
 	// Стилизируем компонент снова
-	checkboxOutput( );
+	checkboxOutput();
 } );

@@ -1,10 +1,10 @@
-var radioOutput = function( )
+var radioOutput = function()
 {
-	var att = new Attributes( ),
+	var att = new Attributes(),
 		radio = $( '<div class="jq-radio"><div class="jq-radio__div"></div></div>' )
-				.attr( { id: att.id, title: att.title } )
-				.addClass( att.classes )
-				.data( att.data );
+			.attr( { id: att.id, title: att.title } )
+			.addClass( att.classes )
+			.data( att.data );
 
 	// Прячем оригинальную радиокнопку
 	el.css( {
@@ -14,7 +14,7 @@ var radioOutput = function( )
 		margin: 0,
 		padding: 0
 	} )
-	.after( radio ).prependTo( radio );
+		.after( radio ).prependTo( radio );
 
 	//
 	radio.attr( 'unselectable', 'on' )
@@ -26,32 +26,32 @@ var radioOutput = function( )
 			'user-select': 'none',
 			display: 'inline-block',
 			position: 'relative'
-	} );
+		} );
 
 	// Установка изначального состояния псевдоблока
 	if( el.is( ':disabled' ) )
 	{
 		radio.addClass( 'disabled' );
-	} 
-	
+	}
+
 	// Клик по псевдоблоку
 	radio.click( function( e )
 	{
 		//
-		e.preventDefault( );
+		e.preventDefault();
 
 		// Обрабатываем только активную радиокнопку
 		if( !radio.is( '.disabled' ) )
 		{
 			// Ищем нужный нам елемент в блоке который указан в настройках ( по умолчанию form )
 			var findElement = radio.closest( opt.wrapper )
-								.find( 'input[name="' + el.attr( 'name' ) + '"]:radio' );
+				.find( 'input[name="' + el.attr( 'name' ) + '"]:radio' );
 
 			// ... если не нашли - ищем по родителям
 			if( findElement.length <= 0 )
 			{
 				findElement = radio.closest( '#' + el.attr( 'name' ) )
-								.find( 'input[name="' + el.attr( 'name' ) + '"]:radio' );
+					.find( 'input[name="' + el.attr( 'name' ) + '"]:radio' );
 			}
 
 			// ... или же по всему документу
@@ -62,68 +62,68 @@ var radioOutput = function( )
 
 			// Снимаем отметку с найденного блока
 			findElement.prop( 'checked', false )
-					.parent( ).removeClass( 'checked' );			
+				.parent().removeClass( 'checked' );
 
 			// Передаём фокус и вызываем событие - изменения
 			el.prop( 'checked', true )
-				.focus( )
-				.change( );
+				.focus()
+				.change();
 		}
 	} );
-		
+
 	// Переключение стрелками
 	el.on( 'change.' + pluginName, function( e )
 	{
 		if( !el.is( ':disabled' ) )
 		{
-			if( $( this ).is(':checked') )
+			if( $( this ).is( ':checked' ) )
 			{
-				el.parent( )
+				el.parent()
 					.addClass( 'checked' );
 			}
 			else
 			{
-				el.parent( )
+				el.parent()
 					.removeClass( 'checked' );
 			}
 		}
-		
+
 	} )
 	// Обработка наведения фокуса
-	.on( 'focus.' + pluginName, function( )
-	{
-		if( !radio.is( '.disabled' ) )
+		.on( 'focus.' + pluginName, function()
 		{
-			radio.addClass( 'focused' );
-		}
-	} )
-	// Обработка снятия фокуса
-	.on( 'blur.' + pluginName, function( )
-	{
-		radio.removeClass( 'focused' );
-	} );
-	
+			if( !radio.is( '.disabled' ) )
+			{
+				radio.addClass( 'focused' );
+			}
+		} )
+		// Обработка снятия фокуса
+		.on( 'blur.' + pluginName, function()
+		{
+			radio.removeClass( 'focused' );
+		} );
+
 	// Клик на label
 	el.closest( 'label' )
 		.add( 'label[for="' + el.attr( 'id' ) + '"]' )
 		.on( 'click.' + pluginName, function( e )
-	{
-		if( !$( e.target ).is( 'a' ) && !$( e.target ).closest( radio ).length )
 		{
-			radio.triggerHandler( 'click' );
-			e.preventDefault( );
-		}
-	} );
-	
+			if( !$( e.target ).is( 'a' ) && !$( e.target ).closest( radio ).length )
+			{
+				radio.triggerHandler( 'click' );
+				e.preventDefault();
+			}
+		} );
+
 	// Мы установили стиль, уведомляем об изменении
-	el.change( );
+	el.change();
 };
 
 // Стилизируем компонент
-radioOutput( );
+radioOutput();
 
 // Обновление при динамическом изменении
-el.on( 'refresh', function( )
+el.on( 'refresh', function()
 {
 	//
 	el.closest( 'label' )
@@ -132,8 +132,8 @@ el.on( 'refresh', function( )
 
 	// Убираем стилизацию компонента
 	el.off( '.' + pluginName )
-		.parent( ).before( el ).remove( );
+		.parent().before( el ).remove();
 
 	// Стилизируем компонент снова
-	radioOutput( );
+	radioOutput();
 } );
